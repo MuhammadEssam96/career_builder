@@ -282,7 +282,7 @@ class _DailyHttpState extends State<DailyHttp> {
                   ),
                   //text
                   Container(
-                    child: questionText(myq),
+                    child: QuestionText(myq),
                   ),
                   SizedBox(
                     height: 30,

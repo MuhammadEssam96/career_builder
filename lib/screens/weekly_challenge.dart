@@ -263,7 +263,7 @@ class _WeeklyChallengeState extends State<WeeklyChallenge> {
                                 ],
                               ),
                               Container(
-                                child: questionText(questiontext),
+                                child: QuestionText(questiontext),
                               ),
                               SizedBox(
                                 height: 30,

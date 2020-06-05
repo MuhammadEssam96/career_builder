@@ -288,7 +288,7 @@ class _DailyFireState extends State<DailyFire> {
                                   ],
                                 ),
                                 Container(
-                                  child: questionText(questiontext),
+                                  child: QuestionText(questiontext),
                                 ),
                                 SizedBox(
                                   height: 30,
