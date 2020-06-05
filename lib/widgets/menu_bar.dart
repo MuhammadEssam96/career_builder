@@ -8,24 +8,23 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-
   final dbRef = FirebaseDatabase.instance.reference().child('users');
   var fname;
   var email;
   var img;
+
   getData()async{
     dbRef.orderByChild('id').equalTo('0').once().then((DataSnapshot snapshot){
-         fname= snapshot.value[0]['first_name'];
-         email=snapshot.value[0]['email'];
-         img=snapshot.value[0]['profile_picture'];
+      fname= snapshot.value[0]['first_name'];
+      email=snapshot.value[0]['email'];
+      img=snapshot.value[0]['profile_picture'];
 
-        setState(() {
-          
-        });
+      setState(() {
+
+      });
     });
   }
-   
-  
+
   @override
   void initState() {
     super.initState();
@@ -42,7 +41,6 @@ class _MenuState extends State<Menu> {
 //              bottomLeft: Radius.circular(80)),
         color: Color(0xff222931),
       ),
-
       child: ListView(
         // Important: Remove any padding from the ListView.
         padding: EdgeInsets.zero,
@@ -58,13 +56,13 @@ class _MenuState extends State<Menu> {
             ),
             accountName: Text('${fname ??'loading..'}',style: TextStyle(fontSize: 25),),
             accountEmail: Text('${email ??'loading..'}',style: TextStyle(fontSize: 18),),
-            currentAccountPicture:ClipOval(
-                  child: Image.network(img ??'https://via.placeholder.com/150',
-                    width: 300,
-                    height: 200,
-                    fit: BoxFit.cover,
-                    ),
-                    ),
+            currentAccountPicture: ClipOval(
+              child: Image.network(img ??'https://via.placeholder.com/150',
+                width: 300,
+                height: 200,
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
 //            DrawerHeader(
 //              decoration: BoxDecoration(
@@ -94,10 +92,7 @@ class _MenuState extends State<Menu> {
               ),
             ),
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context){
-                    return ChallengeScreen();
-                  },));
+              Navigator.push(context,MaterialPageRoute(builder: (context) => ChallengeScreen()));
             },
           ),
           //tracks
@@ -118,10 +113,7 @@ class _MenuState extends State<Menu> {
               ),
             ),
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context){
-                    return ChallengeScreen();
-                  },));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ChallengeScreen()));
             },
           ),
           //offers
@@ -142,10 +134,7 @@ class _MenuState extends State<Menu> {
               ),
             ),
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context){
-                    return ChallengeScreen();
-                  },));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ChallengeScreen()));
             },
           ),
           //setting
@@ -166,32 +155,26 @@ class _MenuState extends State<Menu> {
               ),
             ),
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context){
-                    return ChallengeScreen();
-                  },));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ChallengeScreen()));
             },
           ),
           //logoutButton
           Divider(color: Colors.black26,indent: 30,endIndent: 30,),
           Container(
-
-              margin: EdgeInsets.only(left: 50,right: 50,top: 10),
-              child:RaisedButton(
-                color: Color(0xff09D8D2),
-                shape: RoundedRectangleBorder
-                  (borderRadius:BorderRadius.all
-                  (Radius.circular(30.0))),
-                child: Text('LogOut',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold
-                  ),
+            margin: EdgeInsets.only(left: 50,right: 50,top: 10),
+            child:RaisedButton(
+              color: Color(0xff09D8D2),
+              shape: RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(30.0))),
+              child: Text('LogOut',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold
                 ),
-                onPressed: (){
-                },
-              )
+              ),
+              onPressed: (){
+              },
+            )
           )
         ],
       ),
