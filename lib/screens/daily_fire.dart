@@ -301,10 +301,10 @@ class _DailyFireState extends State<DailyFire> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       //false button
-                                      answerButton(
+                                      AnswerButton(
                                         buttonColor: colorsList[index][false],
                                         buttonText: 'False ',
-                                        buttonOnpressed: () {
+                                        buttonOnPressed: () {
                                           if (questionAnswer == 'FALSE') {
                                             if (index == 0) {
                                               if (qUserAnswer1.isNotEmpty) {
@@ -349,11 +349,11 @@ class _DailyFireState extends State<DailyFire> {
                                       SizedBox(
                                         width: 30,
                                       ),
-                                      answerButton(
+                                      AnswerButton(
                                         buttonColor: colorsList[index]
                                             [true],
                                         buttonText: 'True',
-                                        buttonOnpressed: () {
+                                        buttonOnPressed: () {
                                           if (questionAnswer == 'TRUE') {
                                             if (index == 0) {
                                               qUserAnswer1.insert(index, true);

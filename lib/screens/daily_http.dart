@@ -295,10 +295,10 @@ class _DailyHttpState extends State<DailyHttp> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         //false button
-                        answerButton(
+                        AnswerButton(
                           buttonColor: colorsList[index][false],
                           buttonText: 'False ',
-                          buttonOnpressed: () {
+                          buttonOnPressed: () {
                             if (qanswer == 'false') {
                               sr.increaseDailyScore(qScore);
                              // list.saveList();
@@ -328,10 +328,10 @@ class _DailyHttpState extends State<DailyHttp> {
                         SizedBox(
                           width: 30,
                         ),
-                        answerButton(
+                        AnswerButton(
                           buttonColor: colorsList[index][true],
                           buttonText: 'True',
-                          buttonOnpressed: () {
+                          buttonOnPressed: () {
                             if (qanswer == 'true') {
                               sr.increaseDailyScore(qScore);
                               // list.saveList();
