@@ -1,18 +1,16 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 class RandomNumber with ChangeNotifier {
   static int _randomNumber;
   int get randomNumber => _randomNumber ?? 0;
-
   int _maxNumber = 10;
 
-  RandomNumber(){
+  RandomNumber() {
     _randomNumber = Random().nextInt(_maxNumber);
   }
-  
-  void reduceMaxNumber(List questionIDsFromChallenges){
+
+  void reduceMaxNumber(List questionIDsFromChallenges) {
     if(questionIDsFromChallenges.isEmpty || questionIDsFromChallenges == null) return;//return nothing
     print('inside reduce');
     int listLength = questionIDsFromChallenges.length;
@@ -22,5 +20,4 @@ class RandomNumber with ChangeNotifier {
     _randomNumber = Random().nextInt(_maxNumber);
     notifyListeners();
   }
-
 }
