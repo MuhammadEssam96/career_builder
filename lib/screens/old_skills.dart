@@ -25,24 +25,24 @@ class _OldSkillsState extends State<OldSkills> {
     dbref.orderByChild('user_id').equalTo('2').once().then((snapshot) {
       if (snapshot.value != null) {
         //TODO اشوف حتة النل دي هو كده كده في داتا 
-        var respose = snapshot.value.values;
-        for (int i = 0; i < respose.length; i++) {
-          if (respose.elementAt(i)['status'] == 'old') {
-            var skillId = respose.elementAt(i)['skill_id'];
-            oldSkills.add(respose.elementAt(i));
+        var response = snapshot.value.values;
+        for (int i = 0; i < response.length; i++) {
+          if (response.elementAt(i)['status'] == 'old') {
+            var skillId = response.elementAt(i)['skill_id'];
+            oldSkills.add(response.elementAt(i));
             fetchSkills(skillId);
           }
         }
         if(oldSkills.isEmpty){
-           skilldata.add({
-          'langname': 'no old skills yet',
-          'level': '0'
-        });
-            setState(() {});
+          skilldata.add({
+            'langname': 'no old skills yet',
+            'level': '0'
+          });
+          setState(() {});
         }
         print('old $oldSkills');
-      }else{
-       skilldata.add({
+      } else {
+        skilldata.add({
           'langname': 'no new skills yet',
           'level': '0'
         });
@@ -50,7 +50,6 @@ class _OldSkillsState extends State<OldSkills> {
           
         });
       }
-      
     });
   }
 
@@ -77,9 +76,9 @@ class _OldSkillsState extends State<OldSkills> {
 
   @override
   Widget build(BuildContext context) {
-     int  skilllength=skilldata.length;
-             double equation=(skilllength*35).toDouble();
-              double sizedboxHeight=50 + equation ;
+    int skilllength = skilldata.length;
+    double equation = (skilllength*35).toDouble();
+    double sizedboxHeight = 50 + equation ;
     return Column(
       children: <Widget>[
         Row(
@@ -93,7 +92,6 @@ class _OldSkillsState extends State<OldSkills> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
-
             SizedBox(
               width: 10,
             ),
@@ -113,50 +111,57 @@ class _OldSkillsState extends State<OldSkills> {
         ),
         //vertical
         Container(
-            margin: EdgeInsets.only(top: 3),
-            width: MediaQuery.of(context).size.width - 60,
-            height: 2,
-            color: Color(0xff8CDBD8)),
+          margin: EdgeInsets.only(top: 3),
+          width: MediaQuery.of(context).size.width - 60,
+          height: 2,
+          color: Color(0xff8CDBD8)
+        ),
         SizedBox(
-            height: sizedboxHeight,
-            child: skilldata.isNotEmpty
-                ? ListView.builder(
-                    itemCount: skilldata.length,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      var level=skilldata[index]['level'];
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              child: Text(
-                                '${skilldata[index]['langname']}',
-                                style: widget.style,
-                              ),
-                            ),
-                          ),
-                          oldSkills.isNotEmpty? Row(
-                            children: <Widget>[
-                              level=='1'||level=='2'||level=='3'? LevelPoints(containerColor:activeLevel)
-                              :LevelPoints(containerColor:inactiveLevel),//level 1 2 3
-                              SizedBox(width: 1),
-                              level=='2'||level=='3'? LevelPoints(containerColor:activeLevel)
-                              :LevelPoints(containerColor:inactiveLevel),//level 2 3
-                              SizedBox(width: 1),
-                              level=='3'? LevelPoints(containerColor:activeLevel)
-                              :LevelPoints(containerColor:inactiveLevel),//level 3
-                            ],
-                          ):Container(),
-                        ],
-                      );
-                    })
-                : Center(
-                    child: CircularProgressIndicator(),
-                  )),
+          height: sizedboxHeight,
+          child: skilldata.isNotEmpty ? ListView.builder(
+            itemCount: skilldata.length,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              var level=skilldata[index]['level'];
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      child: Text(
+                        '${skilldata[index]['langname']}',
+                        style: widget.style,
+                      ),
+                    ),
+                  ),
+                  oldSkills.isNotEmpty? Row(
+                    children: <Widget>[
+                      level=='1'||level=='2'||level=='3'?
+                      LevelPoints(containerColor:activeLevel)
+                      :
+                      LevelPoints(containerColor:inactiveLevel),//level 1 2 3
+                      SizedBox(width: 1),
+                      level=='2'||level=='3'?
+                      LevelPoints(containerColor:activeLevel)
+                      :
+                      LevelPoints(containerColor:inactiveLevel),//level 2 3
+                      SizedBox(width: 1),
+                      level=='3'?
+                      LevelPoints(containerColor:activeLevel)
+                      :
+                      LevelPoints(containerColor:inactiveLevel),//level 3
+                    ],
+                  ):Container(),
+                ],
+              );
+            }
+          )
+          : Center(
+               child: CircularProgressIndicator(),
+          )
+        ),
       ],
     );
   }
 }
-
