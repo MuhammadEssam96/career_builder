@@ -176,7 +176,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                               color: Color(0xff09D8D2),
                               shape: RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(30.0))),
                               onPressed: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => Weeklylist()));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => WeeklyList()));
                               },
                               child: Column(
                                 children: <Widget>[
