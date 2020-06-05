@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class Ids{
-   var time=TimeOfDay.now();
+class Ids {
+  var time = TimeOfDay.now();
 
-   df(){
-     return print(time);
-   }
+  df() {
+    return print(time);
+  }
 }
