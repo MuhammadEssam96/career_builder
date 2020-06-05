@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DailyScore with ChangeNotifier {
@@ -8,7 +7,7 @@ class DailyScore with ChangeNotifier {
 //get daily
   get getDailyScore => _dailyScore;
 
-  DailyScore(){
+  DailyScore() {
     if (_dailyScore == 0 || _dailyScore == null) {
       SharedPreferences.getInstance().then((prefs) {
         print('read daily called');
@@ -19,20 +18,21 @@ class DailyScore with ChangeNotifier {
   }
 
 //read daily
-  readDaily(SharedPreferences prefs)async {
+  readDaily(SharedPreferences prefs) async {
     int newDailyScore = prefs.getInt('dailyScore') ?? 0;
     print('read Daily score called');
     setDaily(newDailyScore);
     print('read Daily score finished');
   }
+
 //increase
-increaseDailyScore(qScore){
- int convertedScore=int.parse(qScore);
- int totalDailyScore=_dailyScore + convertedScore;
- print('set Daily score called');
- setDaily(totalDailyScore);
- print('set Daily score finished');
-}
+  increaseDailyScore(qScore) {
+    int convertedScore = int.parse(qScore);
+    int totalDailyScore = _dailyScore + convertedScore;
+    print('set Daily score called');
+    setDaily(totalDailyScore);
+    print('set Daily score finished');
+  }
 
 //set daily
   setDaily(int newDailyScore) {
