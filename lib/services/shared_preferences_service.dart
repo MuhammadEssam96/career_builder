@@ -12,27 +12,21 @@ class SharedPreferencesService with ChangeNotifier{
   get weeklyScore => _weeklyScore ?? 0;
 
   static int _qlength;
-
- 
-
-
-//get
   get questionsLength =>  _qlength;
 
+  void saveQLength(int length) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    print('save length called');
+    pref.setInt('length', length);
+    notifyListeners();
+    print('save length finished');
+  }
 
-  void saveQLength(int length)async{
+  readQLength()async{
     SharedPreferences pref=await SharedPreferences.getInstance();
-         print('save length called');
-          pref.setInt('length', length);
-          notifyListeners();
-          print('save length finished');
+    var lengthFromShared=pref.getInt('length');
+    _qlength=lengthFromShared;
   }
-   readQLength()async{
-   SharedPreferences pref=await SharedPreferences.getInstance();
-   var lengthFromShared=pref.getInt('length');
-          _qlength=lengthFromShared;
-  }
-
 
   //const not accept future so we use then 
   SharedPreferencesService(){
@@ -55,6 +49,7 @@ class SharedPreferencesService with ChangeNotifier{
       });
     }
   }
+
   // totalScore functions
   readTotalScoreFromShared(SharedPreferences prefs){
     int newScore = prefs.getInt('score') ?? 0;
@@ -124,7 +119,4 @@ class SharedPreferencesService with ChangeNotifier{
     int newScore = _weeklyScore + convertedScore;
     setWeeklyScore(newScore);
   }
- 
-  
-  
 }
