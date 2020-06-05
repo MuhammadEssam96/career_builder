@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "732823354938",
+    "firebase_url": "https://career-builder-54d16.firebaseio.com",
+    "project_id": "career-builder-54d16",
+    "storage_bucket": "career-builder-54d16.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:732823354938:android:359c21d70bf3e53511ff03",
+        "android_client_info": {
+          "package_name": "bido.careeerproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "732823354938-en62kgs78tsgu2cs04vhrr01q04ccmcg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpt5dFJoJcGw_lEYE0VepkG4wmTkx-kc4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "732823354938-en62kgs78tsgu2cs04vhrr01q04ccmcg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:732823354938:android:1de60f069691c35511ff03",
+        "android_client_info": {
+          "package_name": "com.example.careerbuilder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "732823354938-en62kgs78tsgu2cs04vhrr01q04ccmcg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpt5dFJoJcGw_lEYE0VepkG4wmTkx-kc4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "732823354938-en62kgs78tsgu2cs04vhrr01q04ccmcg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

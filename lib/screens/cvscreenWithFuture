@@ -1,0 +1,467 @@
+import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:careerbuilder/widgets/skill_section.dart';
+import 'package:careerbuilder/widgets/achievements_section.dart';
+import 'package:careerbuilder/widgets/inprogress_section.dart';
+import 'package:careerbuilder/widgets/languages_section.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:careerbuilder/models/user.dart';
+import 'package:firebase_database/firebase_database.dart';
+
+class CvScreen extends StatefulWidget {
+  @override
+  _CvScreenState createState() => _CvScreenState();
+}
+
+class _CvScreenState extends State<CvScreen> {
+  List<User> userList = [];
+  final dbRef = FirebaseDatabase.instance.reference().child('users');
+  final userSkillsdbRef =
+      FirebaseDatabase.instance.reference().child('user_skills');
+  final skillsdbRef = FirebaseDatabase.instance.reference().child('skills');
+  final List newSkills = [];
+  final List inprogress = [];
+  final List skillsData=[];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+    return Scaffold(
+      body: SafeArea(
+        child: FutureBuilder(
+          future: dbRef.orderByChild('id').equalTo('0').once(),
+          builder: (context, AsyncSnapshot<DataSnapshot> userSnapshot) {
+            if (userSnapshot.hasData) {
+              var userSnapshotData = userSnapshot.data.value;
+              //  print(userSnapshot);
+              User user = User(
+                  fName: userSnapshotData[0]['first_name'],
+                  lName: userSnapshotData[0]['last_name'],
+                  job: userSnapshotData[0]['job'],
+                  gender: userSnapshotData[0]['gender'],
+                  age: userSnapshotData[0]['age'],
+                  education: userSnapshotData[0]['eduvation'],
+                  email: userSnapshotData[0]['email'],
+                  phone: userSnapshotData[0]['phone'],
+                  img: userSnapshotData[0]['profile_picture']);
+
+              print(userSnapshotData[0]['first_name']);
+              return SizedBox(
+                height: 1000,
+                 child: ListView(
+                  children: <Widget>[
+                    //header
+                    Center(
+                      child: Container(
+                        height: 150,
+                        width: double.infinity,
+                        color: Color(0xffD5FFFD),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            //image
+                            Container(
+                              margin: EdgeInsets.only(
+                                left: 10,
+                              ),
+                              width: 120,
+                              height: 120,
+                              child: CircleAvatar(
+                                  backgroundImage: NetworkImage(user.img)),
+                            ),
+                            SizedBox(width: 20),
+//               details
+                            Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    margin: EdgeInsets.only(top: 40, bottom: 10),
+                                    child: Text(
+                                      '${user.fName} ${user.lName}',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black54),
+                                    ),
+                                  ),
+                                  Container(
+                                      alignment: Alignment.center,
+                                      width: 150,
+//                           margin: EdgeInsets.only(left: 40),
+                                      child: Text(
+                                        '${user.job}',
+                                        style: TextStyle(color: Colors.black54),
+                                      )),
+                                  Row(
+                                    children: <Widget>[
+                                      Container(
+                                          margin: EdgeInsets.only(top: 20),
+                                          child: Text(
+                                            '${user.gender}',
+                                            style:
+                                                TextStyle(color: Colors.black54),
+                                          )),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(top: 20),
+                                        height: 15,
+                                        width: 2,
+                                        color: Color(0xff8CDBD8),
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Container(
+                                          margin: EdgeInsets.only(top: 20),
+                                          child: Text(
+                                            '${user.age}',
+                                            style:
+                                                TextStyle(color: Colors.black54),
+                                          )),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    //contact & education &line
+                    Container(
+                      //contact&icon
+                      child: Row(
+//               mainAxisAlignment: MainAxisAlignment.center,
+
+                        children: <Widget>[
+                          //contact section
+                          Row(
+                            children: <Widget>[
+                              //icon
+                              Container(
+                                margin:
+                                    EdgeInsets.only(top: 10, left: 30, bottom: 2),
+
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: Color(0xffA2E8E8),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: Icon(
+                                  FontAwesomeIcons.addressBook,
+                                  size: 30,
+                                ),
+//
+//                       Image.asset('assets/download (1).png',
+//                       fit: BoxFit.cover,width: 5,),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              //contact text
+                              Container(
+                                margin: EdgeInsets.only(top: 20),
+                                child: Text(
+                                  'CONTACT',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            width: 110,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              //contact text
+                              Container(
+                                margin: EdgeInsets.only(top: 20),
+                                child: Text(
+                                  'EDUCATION',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              //icon
+
+                              Container(
+                                margin:
+                                    EdgeInsets.only(top: 10, left: 10, bottom: 2),
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: Color(0xffA2E8E8),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: Container(
+                                  width: 100,
+                                  height: 100,
+//                         padding:EdgeInsets.only(top: 20),
+                                  child: Image.asset(
+                                    'assets/cap2.png',
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    //devideer
+                    Container(
+                        height: 2,
+                        child: VerticalDivider(
+                          color: Color(0xff8CDBD8),
+                          width: 10,
+                          thickness: 350,
+                        )),
+                    //eduction section
+
+//           content contact
+                    Container(
+                      height: 150,
+//            margin: EdgeInsets.only(top: 5),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.only(left: 30),
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(
+                                      padding: EdgeInsets.only(
+                                        top: 30,
+                                      ),
+                                      height: 150,
+                                      width: 170,
+                                      child: Column(
+                                        children: <Widget>[
+                                          //gmail details
+                                          Row(
+                                            children: <Widget>[
+                                              Container(
+                                                child:
+                                                    Icon(Icons.email, size: 20),
+                                              ),
+                                              SizedBox(
+                                                width: 15,
+                                              ),
+                                              Container(
+                                                width: 120,
+//                                margin: EdgeInsets.only(right: ),
+                                                child: Text(
+                                                  '${user.email}',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.black45,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 15,
+                                          ),
+                                          //phone details
+                                          Row(
+                                            children: <Widget>[
+                                              Container(
+//                              padding: EdgeInsets.only(right: 5),
+                                                child:
+                                                    Icon(Icons.phone, size: 20),
+                                              ),
+                                              SizedBox(
+                                                width: 20,
+                                              ),
+                                              Container(
+                                                child: Text(
+                                                  '${user.phone}',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.black45,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              //education details
+                              Container(
+                                width: 175,
+                                height: 100,
+                                margin: EdgeInsets.only(left: 20, right: 15),
+                                //edu
+                                child: Column(
+                                  children: <Widget>[
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    //bach
+                                    Container(
+//                      margin: EdgeInsets.only(right: 15),
+                                      child: Text(
+                                        '${user.education}',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.black45,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    //alex
+                                    Container(
+//                      margin: EdgeInsets.only(right: 50),
+                                      child: Text(
+                                        'Alexandria University',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black54,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    //
+                    FutureBuilder(
+                        future: userSkillsdbRef
+                            .orderByChild('user_id')
+                            .equalTo('2')
+                            .once(),
+                        builder: (context, AsyncSnapshot<DataSnapshot> userSkillsnapshot) {
+                          if (userSkillsnapshot.hasData) {
+                            var userSkillsSnapshot =
+                                userSkillsnapshot.data.value.values;
+                            var inpro = 'onprogress';
+                            print('1');
+                            for (int i = 0; i < userSkillsSnapshot.length; i++) {
+                              if (userSkillsSnapshot.elementAt(i)['status'] ==
+                                  inpro) {
+                                inprogress.add(
+                                    userSkillsSnapshot.elementAt(i)['skill_id']);
+                              } else {
+                                newSkills.add(
+                                    userSkillsSnapshot.elementAt(i)['skill_id']);
+                              }
+                            }
+                            print('inprogress $inprogress');
+                            print('new skills $newSkills');
+
+                            if (inprogress.isNotEmpty) {
+                              
+                               for(int i=0;i<inprogress.length;i++){
+                               //TODO افهم اللي مكتوب ده
+                                 
+                                  var inproSkillId = inprogress[i];
+                                  return FutureBuilder(
+                                      future: skillsdbRef
+                                          .child('$inproSkillId')
+                                          .once(),
+                                      builder: (context,
+                                          AsyncSnapshot<DataSnapshot>
+                                              snapshot2) {
+                                        if (snapshot2.hasData) {
+                                          var inprogSkillsData =snapshot2.data.value;
+                                            skillsData.add(inprogSkillsData[i]);
+                                          print(
+                                              'inprog skillsdata${skillsData}');
+                                          // var langName=skillsData
+                                          return Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: <Widget>[
+                                                  //achieve
+                                                  achievemnts_section(),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  //skills
+                                                  skills_section('${inprogSkillsData['name']}'),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Column(
+                                                children: <Widget>[
+                                                  Container(
+                                                    //  margin: EdgeInsets.only(top: 60),
+                                                    child: language_section(),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Container(
+                                                    child: inprog_section(),
+                                                  )
+                                                ],
+                                              ),
+                                            ],
+                                          );
+                                        }
+
+                                        return Container();
+                                      });
+                                }
+                            } else {
+                              Container(
+                                child: Text('no skills yet'),
+                              );
+                            }
+                            } else {
+                            return Center(
+                             child: CircularProgressIndicator(),
+                                   );
+                          }
+                        }),
+                  ],
+                ),
+              );
+            } else {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
