@@ -89,7 +89,7 @@ class _DailyFireState extends State<DailyFire> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dialy challenge'),
+        title: Text('Daily challenge'),
         centerTitle: true,
         backgroundColor: Color(0xff09D8D2),
       ),
