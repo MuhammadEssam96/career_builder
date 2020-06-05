@@ -1,4 +1,3 @@
 class CvFetching{
-  List achievements=['dart','php'];
-
+  List achievements = ['dart','php'];
 }
