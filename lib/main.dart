@@ -3,33 +3,23 @@ import 'package:careerbuilder/services/shared_preferences_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:careerbuilder/screens/challengeScreen.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-
 import 'models/challenges_State.dart';
-void main() => runApp(
+
+void main() {
+  runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => SharedPreferencesService()),
         ChangeNotifierProvider(create: (context) => RandomNumber()),
-        ChangeNotifierProvider(create: (context)=>ChallengeState()),
+        ChangeNotifierProvider(create: (context) => ChallengeState()),
       ],
-      child: MyApp()
+      child: MyApp(),
     ),
   );
-
-
-
-class MyApp extends StatelessWidget {
-  
-  @override
-  Widget build(BuildContext context) {
-    
-    return MaterialApp(home:ChallengeScreen());
-  }
 }
 
-
-
-
-
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => MaterialApp(home: ChallengeScreen());
+}
