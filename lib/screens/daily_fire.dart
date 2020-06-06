@@ -48,6 +48,7 @@ class _DailyFireState extends State<DailyFire> {
   List questions = [];
   List challengeData = [];
   List challengeIds = [];
+  List list = [];
   var qtext;
   final questionsDbRef =
       FirebaseDatabase.instance.reference().child('questions');
@@ -104,6 +105,8 @@ class _DailyFireState extends State<DailyFire> {
             // handeled
             if (challSnapshot.data.value != null) {
               var challengeResponse = challSnapshot.data.value.values;
+              
+              print('challenge response$challengeResponse');
               for (var i = 0; i < challengeResponse.length; i++) {
                 if (challengeResponse.elementAt(i)['type'] == 'daily') {
                   if (challengeResponse.elementAt(i)['skill_id'] ==
@@ -122,9 +125,18 @@ class _DailyFireState extends State<DailyFire> {
                   }
                 } else {
                   print('no skill id found in challenge');
-                  print(widget.skillId);
+                  print('skill id from widget${widget.skillId}');
                 }
+                print('skill id from widget${widget.skillId}');
+                print('challenge ids $challengeIds');
               }
+              
+              for (Map map in challengeData){
+                list.add(map['time_stamp']);
+              }
+              list.sort();
+              print('time list $list');
+
             }
 
             Future.delayed(Duration(milliseconds: 100), () {
@@ -139,7 +151,7 @@ class _DailyFireState extends State<DailyFire> {
             // print(challSnapshot.data.value.values);
             // print('${challengeData[0]['time_stamp']}');            //
             if (challengeData.isNotEmpty) {
-              var time = int.parse(challengeData.last['time_stamp']);
+              var time = int.parse(list.last);
               DateTime challengeTime =
                   DateTime.fromMillisecondsSinceEpoch(time);
               DateTime timeNow = DateTime.fromMillisecondsSinceEpoch(
@@ -272,7 +284,7 @@ class _DailyFireState extends State<DailyFire> {
                                           padding: EdgeInsets.only(top: 10),
                                           margin: EdgeInsets.all(10),
                                           child: Text(
-                                            'Question ${dailyState.getDailyState}',
+                                            'Question ${index + 1}',
                                             style: TextStyle(
                                               color: Color(0xff44919B),
                                               fontWeight: FontWeight.bold,
