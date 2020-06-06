@@ -43,6 +43,7 @@ _WeeklyChallengeState(this.languageName);
   List questions = [];
   List challengeData = [];
   List challengeIds = [];
+   List list = [];
   var qtext;
   final questionsDbRef =
       FirebaseDatabase.instance.reference().child('questions');
@@ -91,6 +92,7 @@ _WeeklyChallengeState(this.languageName);
           if (challSnapshot.hasData) {// handeled
             if (challSnapshot.data.value != null) {
               var challengeResponse = challSnapshot.data.value.values;
+              print('challenge response$challengeResponse');
               for (var i = 0; i < challengeResponse.length; i++) {
                if(challengeResponse.elementAt(i)['type'] =='weekly'){
                 if (challengeResponse.elementAt(i)['skill_id'] ==
@@ -110,6 +112,11 @@ _WeeklyChallengeState(this.languageName);
                   print(widget.skillId);
                 }
               }
+               for (Map map in challengeData){
+                list.add(map['time_stamp']);
+              }
+              list.sort();
+              print('time list $list');
             }
 
               Future.delayed(
@@ -123,7 +130,7 @@ _WeeklyChallengeState(this.languageName);
               // print(challSnapshot.data.value.values);
               // print('${challengeData[0]['time_stamp']}');            //
               if(challengeData.isNotEmpty){
-              var time = int.parse(challengeData.last['time_stamp']);
+             var time = int.parse(list.last);
               DateTime challengeTime =
                   DateTime.fromMillisecondsSinceEpoch(time);
               DateTime timeNow = DateTime.fromMillisecondsSinceEpoch(
@@ -131,9 +138,9 @@ _WeeklyChallengeState(this.languageName);
               var difference = timeNow.difference(challengeTime).inDays;
               print(challengeTime);
               int differenceInt = int.parse(difference.toString());
-              int remining = 7 - difference;
+              int remining = 2 - difference;
               print(differenceInt);
-              if (differenceInt < 7) {
+              if (differenceInt < 2) {
                 if(differenceInt==1){
                 return Waiting(remining,'day');
                 }else{
